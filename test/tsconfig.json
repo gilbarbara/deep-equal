@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "target": "ES2021"
+  },
+  "include": ["**/*"]
+}
