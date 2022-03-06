@@ -1,0 +1,116 @@
+import { arrayBufferEqual, isObject, isRegex } from './helpers';
+
+export default function equal(left: any, right: any) {
+  if (left === right) {
+    return true;
+  }
+
+  if (left && isObject(left) && right && isObject(right)) {
+    if (left.constructor !== right.constructor) {
+      return false;
+    }
+
+    if (Array.isArray(left) && Array.isArray(right)) {
+      const { length } = left;
+
+      if (length !== right.length) {
+        return false;
+      }
+
+      for (let index = length; index-- !== 0; ) {
+        if (!equal(left[index], right[index])) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    if (left instanceof Map && right instanceof Map) {
+      if (left.size !== right.size) {
+        return false;
+      }
+
+      for (const index of left.entries()) {
+        if (!right.has(index[0])) {
+          return false;
+        }
+      }
+
+      for (const index of left.entries()) {
+        if (!equal(index[1], right.get(index[0]))) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    if (left instanceof Set && right instanceof Set) {
+      if (left.size !== right.size) {
+        return false;
+      }
+
+      for (const index of left.entries()) {
+        if (!right.has(index[0])) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    if (ArrayBuffer.isView(left) && ArrayBuffer.isView(right)) {
+      return arrayBufferEqual(left, right);
+    }
+
+    if (isRegex(left) && isRegex(right)) {
+      return left.source === right.source && left.flags === right.flags;
+    }
+
+    if (left.valueOf !== Object.prototype.valueOf) {
+      return left.valueOf() === right.valueOf();
+    }
+
+    if (left.toString !== Object.prototype.toString) {
+      return left.toString() === right.toString();
+    }
+
+    const leftKeys = Object.keys(left);
+    const rightKeys = Object.keys(right);
+
+    if (leftKeys.length !== rightKeys.length) {
+      return false;
+    }
+
+    for (let index = leftKeys.length; index-- !== 0; ) {
+      if (!Object.prototype.hasOwnProperty.call(right, leftKeys[index])) {
+        return false;
+      }
+    }
+
+    for (let index = leftKeys.length; index-- !== 0; ) {
+      const key = leftKeys[index];
+
+      if (key === '_owner' && left.$$typeof) {
+        // React-specific: avoid traversing React elements' _owner.
+        //  _owner contains circular references
+        // and is not needed when comparing the actual elements (and not their owners)
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (!equal(left[key], right[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  if (Number.isNaN(left) && Number.isNaN(right)) {
+    return true;
+  }
+
+  return left === right;
+}
