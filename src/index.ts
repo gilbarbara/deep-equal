@@ -1,6 +1,75 @@
-import { arrayBufferEqual, isObject, isRegex } from './helpers';
+import { isObject, isRegex } from './helpers';
 
-export default function equal(left: any, right: any) {
+function equalArray(left: unknown[], right: unknown[]) {
+  const { length } = left;
+
+  if (length !== right.length) {
+    return false;
+  }
+
+  for (let index = length; index-- !== 0; ) {
+    if (!equal(left[index], right[index])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function equalArrayBuffer(left: ArrayBufferView, right: ArrayBufferView) {
+  if (left.byteLength !== right.byteLength) {
+    return false;
+  }
+
+  const view1 = new DataView(left.buffer);
+  const view2 = new DataView(right.buffer);
+
+  let index = left.byteLength;
+
+  while (index--) {
+    if (view1.getUint8(index) !== view2.getUint8(index)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function equalMap(left: Map<unknown, unknown>, right: Map<unknown, unknown>) {
+  if (left.size !== right.size) {
+    return false;
+  }
+
+  for (const index of left.entries()) {
+    if (!right.has(index[0])) {
+      return false;
+    }
+  }
+
+  for (const index of left.entries()) {
+    if (!equal(index[1], right.get(index[0]))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function equalSet(left: Set<unknown>, right: Set<unknown>) {
+  if (left.size !== right.size) {
+    return false;
+  }
+
+  for (const index of left.entries()) {
+    if (!right.has(index[0])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+export default function equal(left: unknown, right: unknown) {
   if (left === right) {
     return true;
   }
@@ -11,57 +80,19 @@ export default function equal(left: any, right: any) {
     }
 
     if (Array.isArray(left) && Array.isArray(right)) {
-      const { length } = left;
-
-      if (length !== right.length) {
-        return false;
-      }
-
-      for (let index = length; index-- !== 0; ) {
-        if (!equal(left[index], right[index])) {
-          return false;
-        }
-      }
-
-      return true;
+      return equalArray(left, right);
     }
 
     if (left instanceof Map && right instanceof Map) {
-      if (left.size !== right.size) {
-        return false;
-      }
-
-      for (const index of left.entries()) {
-        if (!right.has(index[0])) {
-          return false;
-        }
-      }
-
-      for (const index of left.entries()) {
-        if (!equal(index[1], right.get(index[0]))) {
-          return false;
-        }
-      }
-
-      return true;
+      return equalMap(left, right);
     }
 
     if (left instanceof Set && right instanceof Set) {
-      if (left.size !== right.size) {
-        return false;
-      }
-
-      for (const index of left.entries()) {
-        if (!right.has(index[0])) {
-          return false;
-        }
-      }
-
-      return true;
+      return equalSet(left, right);
     }
 
     if (ArrayBuffer.isView(left) && ArrayBuffer.isView(right)) {
-      return arrayBufferEqual(left, right);
+      return equalArrayBuffer(left, right);
     }
 
     if (isRegex(left) && isRegex(right)) {
