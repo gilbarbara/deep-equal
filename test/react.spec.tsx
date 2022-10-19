@@ -4,7 +4,7 @@ import { create } from 'react-test-renderer';
 
 import equal from '../src';
 
-class Child extends React.Component {
+class Child extends React.Component<React.PropsWithChildren<any>> {
   shouldComponentUpdate(nextProps: any) {
     // this.props.children is a h1 with a circular reference to its owner, Container
 
