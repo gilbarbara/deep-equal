@@ -1,6 +1,6 @@
 # @gilbarbara/deep-equal
 
-[![npm version](https://badge.fury.io/js/%40gilbarbara%2Fdeep-equal.svg)](https://badge.fury.io/js/%40gilbarbara%2Fdeep-equal) [![CI](https://github.com/gilbarbara/deep-equal/actions/workflows/main.yml/badge.svg)](https://github.com/gilbarbara/deep-equal/actions/workflows/main.yml) [![Maintainability](https://api.codeclimate.com/v1/badges/466ae47e8a9a20955af2/maintainability)](https://codeclimate.com/github/gilbarbara/deep-equal/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/466ae47e8a9a20955af2/test_coverage)](https://codeclimate.com/github/gilbarbara/deep-equal/test_coverage)
+[![npm version](https://badge.fury.io/js/%40gilbarbara%2Fdeep-equal.svg)](https://badge.fury.io/js/%40gilbarbara%2Fdeep-equal) [![CI](https://github.com/gilbarbara/deep-equal/actions/workflows/main.yml/badge.svg)](https://github.com/gilbarbara/deep-equal/actions/workflows/main.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gilbarbara_deep-equal&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gilbarbara_deep-equal)
 
 Lightweight deep equal comparator.
 
