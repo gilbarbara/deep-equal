@@ -12,8 +12,8 @@ local.properties
 ###########################
 .tmp/
 coverage/
-esm/
-lib/
+dist/
+benchmark/
 node_modules/
 stats.html
 .awcache
