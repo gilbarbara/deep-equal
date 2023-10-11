@@ -1,6 +1,6 @@
 {
   "name": "@gilbarbara/deep-equal",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Tiny deep equal comparator",
   "author": "Gil Barbara <gilbarbara@gmail.com>",
   "repository": {
