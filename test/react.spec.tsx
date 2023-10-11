@@ -29,12 +29,12 @@ function Container(props: any): JSX.Element {
   );
 }
 
-const mockChild = jest.spyOn(Child.prototype, 'render');
-const mockWarn = jest.spyOn(console, 'warn');
+const mockChild = vi.spyOn(Child.prototype, 'render');
+const mockWarn = vi.spyOn(console, 'warn');
 
 describe('react', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('compares without warning or errors', () => {
