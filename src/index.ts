@@ -1,5 +1,8 @@
 import { isObject, isRegex } from './helpers';
 
+/**
+ * Check if arrays are equal.
+ */
 function equalArray(left: unknown[], right: unknown[]) {
   const { length } = left;
 
@@ -16,6 +19,9 @@ function equalArray(left: unknown[], right: unknown[]) {
   return true;
 }
 
+/**
+ * Check if array buffers are equal.
+ */
 function equalArrayBuffer(left: ArrayBufferView, right: ArrayBufferView) {
   if (left.byteLength !== right.byteLength) {
     return false;
@@ -35,6 +41,9 @@ function equalArrayBuffer(left: ArrayBufferView, right: ArrayBufferView) {
   return true;
 }
 
+/**
+ * Check if maps are equal.
+ */
 function equalMap(left: Map<unknown, unknown>, right: Map<unknown, unknown>) {
   if (left.size !== right.size) {
     return false;
@@ -55,6 +64,9 @@ function equalMap(left: Map<unknown, unknown>, right: Map<unknown, unknown>) {
   return true;
 }
 
+/**
+ * Check if sets are equal.
+ */
 function equalSet(left: Set<unknown>, right: Set<unknown>) {
   if (left.size !== right.size) {
     return false;
@@ -69,6 +81,9 @@ function equalSet(left: Set<unknown>, right: Set<unknown>) {
   return true;
 }
 
+/**
+ * Checks if two values are equal.
+ */
 export default function equal(left: unknown, right: unknown) {
   if (left === right) {
     return true;

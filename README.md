@@ -7,7 +7,7 @@ Lightweight deep equal comparator.
 ## Features
 - Written in TypeScript
 - ESM ready
-- Works with Map, Set and Typed Arrays
+- Works with Map, Set, and Typed Arrays
 - Works with React component (avoid circular references)
 
 ## Usage
