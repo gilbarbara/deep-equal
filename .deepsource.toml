@@ -1,10 +1,9 @@
 version = 1
 
+test_patterns = [
+  "*.spec.ts"
+]
 
 [[analyzers]]
 name = "javascript"
 enabled = true
-test_patterns = [
-  "test/**",
-  "*.spec.*"
-]
