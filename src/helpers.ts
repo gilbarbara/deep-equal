@@ -2,6 +2,7 @@ import { AnyObject, Primitive } from './types';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function isOfType<T extends Primitive | Function>(type: string) {
+  // eslint-disable-next-line valid-typeof
   return (value: unknown): value is T => typeof value === type;
 }
 
