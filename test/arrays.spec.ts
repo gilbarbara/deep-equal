@@ -2,6 +2,7 @@ import equal from '../src';
 
 describe('arrays', () => {
   test.each([
+  it.each([
     {
       description: 'two empty arrays are equal',
       value1: [],

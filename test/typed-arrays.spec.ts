@@ -1,7 +1,7 @@
 import equal from '../src';
 
 describe('typed arrays', () => {
-  test.each([
+  it.each([
     {
       description: 'two empty arrays of the same class are equal',
       value1: new Int32Array([]),

@@ -3,7 +3,7 @@ import { AnyObject, Primitive } from './types';
 /**
  * Checks if the value is of a specified type.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function isOfType<T extends Primitive | Function>(type: string) {
   // eslint-disable-next-line valid-typeof
   return (value: unknown): value is T => typeof value === type;
@@ -12,7 +12,7 @@ function isOfType<T extends Primitive | Function>(type: string) {
 /**
  * Checks if the value is a JavaScript function.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export const isFunction = isOfType<Function>('function');
 
 /**

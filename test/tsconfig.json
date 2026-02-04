@@ -2,7 +2,8 @@
   "extends": "../tsconfig",
   "compilerOptions": {
     "noUnusedLocals": false,
-    "target": "ES2021"
+    "noUnusedParameters": false,
+    "types": ["jest-extended", "node", "vitest/globals"]
   },
   "include": ["**/*"]
 }

@@ -1,8 +1,9 @@
-/* eslint-disable max-classes-per-file */
 import * as React from 'react';
-import { create } from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import equal from '../src';
+
+const renderCount = { current: 0 };
 
 class Child extends React.Component<React.PropsWithChildren<any>> {
   shouldComponentUpdate(nextProps: any) {
@@ -14,11 +15,13 @@ class Child extends React.Component<React.PropsWithChildren<any>> {
   render() {
     const { children } = this.props;
 
+    renderCount.current++;
+
     return <div>{children}</div>;
   }
 }
 
-function Container(props: any): JSX.Element {
+function Container(props: any) {
   const { subtitle, title } = props;
 
   return (
@@ -29,33 +32,37 @@ function Container(props: any): JSX.Element {
   );
 }
 
-const mockChild = vi.spyOn(Child.prototype, 'render');
 const mockWarn = vi.spyOn(console, 'warn');
 
 describe('react', () => {
+  beforeEach(() => {
+    renderCount.current = 0;
+  });
+
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   it('compares without warning or errors', () => {
-    const testRenderer = create(React.createElement(Container));
+    const { rerender } = render(<Container />);
 
-    testRenderer.update(React.createElement(Container));
+    rerender(<Container />);
 
     expect(mockWarn).toHaveBeenCalledTimes(0);
-    expect(mockChild).toHaveBeenCalledTimes(1);
+    expect(renderCount.current).toBe(1);
   });
 
   it('elements of same type and props are equal', () => {
-    const testRenderer = create(React.createElement(Container));
+    const { rerender } = render(<Container />);
 
-    testRenderer.update(React.createElement(Container));
-    expect(mockChild).toHaveBeenCalledTimes(1);
+    rerender(<Container />);
+    expect(renderCount.current).toBe(1);
   });
-  it('elements of same type with different props are not equal', () => {
-    const testRenderer = create(React.createElement(Container));
 
-    testRenderer.update(React.createElement(Container, { title: 'New' }));
-    expect(mockChild).toHaveBeenCalledTimes(2);
+  it('elements of same type with different props are not equal', () => {
+    const { rerender } = render(<Container />);
+
+    rerender(<Container title="New" />);
+    expect(renderCount.current).toBe(2);
   });
 });

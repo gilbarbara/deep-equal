@@ -16,7 +16,7 @@ function myMap(object: any) {
 }
 
 describe('maps', () => {
-  test.each([
+  it.each([
     {
       description: 'empty maps are equal',
       value1: new Map(),

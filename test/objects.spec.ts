@@ -2,6 +2,7 @@ import equal from '../src';
 
 describe('objects', () => {
   test.each<any>([
+  it.each<any>([
     {
       description: 'empty objects are equal',
       value1: {},

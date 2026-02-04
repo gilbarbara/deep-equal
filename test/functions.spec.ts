@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import equal from '../src';
 
 function function1() {}
@@ -6,7 +5,7 @@ function function1() {}
 function function2() {}
 
 describe('functions', () => {
-  test.each([
+  it.each([
     {
       description: 'same function is equal',
       value1: function1,

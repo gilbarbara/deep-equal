@@ -1,7 +1,7 @@
 import equal from '../src';
 
 describe('scalars', () => {
-  test.each([
+  it.each([
     {
       description: 'equal numbers',
       value1: 1,
