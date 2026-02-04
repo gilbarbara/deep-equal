@@ -1,6 +1,49 @@
 import equal from '../src';
 
 describe('objects', () => {
+  describe('errors', () => {
+    it.each([
+      {
+        description: 'errors with same message are equal',
+        value1: new Error('a'),
+        value2: new Error('a'),
+        expected: true,
+      },
+      {
+        description: 'errors with different message are not equal',
+        value1: new Error('a'),
+        value2: new Error('b'),
+        expected: false,
+      },
+      {
+        description: 'TypeError and Error with same message are not equal',
+        value1: new TypeError('a'),
+        value2: new Error('a'),
+        expected: false,
+      },
+      {
+        description: 'errors with same cause are equal',
+        value1: new Error('a', { cause: 'x' }),
+        value2: new Error('a', { cause: 'x' }),
+        expected: true,
+      },
+      {
+        description: 'errors with different cause are not equal',
+        value1: new Error('a', { cause: 'x' }),
+        value2: new Error('a', { cause: 'y' }),
+        expected: false,
+      },
+      {
+        description: 'errors with deep cause are equal',
+        value1: new Error('a', { cause: { n: 1 } }),
+        value2: new Error('a', { cause: { n: 1 } }),
+        expected: true,
+      },
+    ])('$description', ({ expected, value1, value2 }) => {
+      expect(equal(value1, value2)).toBe(expected);
+    });
+  });
+
   describe('circular references', () => {
     it('should handle self-referential objects', () => {
       const a: any = { value: 1 };

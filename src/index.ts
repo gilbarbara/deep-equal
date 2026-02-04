@@ -34,12 +34,25 @@ function compareValues(left: unknown, right: unknown, seen: Seen): boolean {
       return equalSet(left, right);
     }
 
+    // WeakMap and WeakSet cannot be compared (not iterable)
+    if (left instanceof WeakMap || left instanceof WeakSet) {
+      return false;
+    }
+
     if (ArrayBuffer.isView(left) && ArrayBuffer.isView(right)) {
       return equalArrayBuffer(left, right);
     }
 
     if (isRegex(left) && isRegex(right)) {
       return left.source === right.source && left.flags === right.flags;
+    }
+
+    if (left instanceof Error && right instanceof Error) {
+      return (
+        left.message === right.message &&
+        left.name === right.name &&
+        compareValues(left.cause, right.cause, seen)
+      );
     }
 
     if (left.valueOf !== Object.prototype.valueOf) {
