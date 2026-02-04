@@ -1,7 +1,19 @@
 import equal from '../src';
 
 describe('arrays', () => {
-  test.each([
+  describe('circular references', () => {
+    it('should handle arrays with circular references', () => {
+      const array1: any[] = [1, 2];
+
+      array1.push(array1);
+      const array2: any[] = [1, 2];
+
+      array2.push(array2);
+
+      expect(equal(array1, array2)).toBe(true);
+    });
+  });
+
   it.each([
     {
       description: 'two empty arrays are equal',

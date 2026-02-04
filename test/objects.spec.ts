@@ -1,7 +1,44 @@
 import equal from '../src';
 
 describe('objects', () => {
-  test.each<any>([
+  describe('circular references', () => {
+    it('should handle self-referential objects', () => {
+      const a: any = { value: 1 };
+
+      a.self = a;
+      const b: any = { value: 1 };
+
+      b.self = b;
+
+      expect(equal(a, b)).toBe(true);
+    });
+
+    it('should handle cross-referential objects', () => {
+      const x: any = { value: 'x' };
+      const y: any = { value: 'y' };
+
+      x.ref = y;
+      y.ref = x;
+
+      const p: any = { value: 'x' };
+      const q: any = { value: 'y' };
+
+      p.ref = q;
+      q.ref = p;
+
+      expect(equal(x, p)).toBe(true);
+    });
+
+    it('should return false when only one side has circular reference', () => {
+      const circular: any = { value: 1 };
+
+      circular.self = circular;
+      const nonCircular = { value: 1, self: { value: 1 } };
+
+      expect(equal(circular, nonCircular)).toBe(false);
+    });
+  });
+
   it.each<any>([
     {
       description: 'empty objects are equal',
