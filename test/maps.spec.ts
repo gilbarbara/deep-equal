@@ -1,5 +1,21 @@
 import equal from '../src';
 
+describe('maps - circular references', () => {
+  it('should handle maps with circular references in values', () => {
+    const map1 = new Map();
+    const object1: any = { map: map1 };
+
+    map1.set('obj', object1);
+
+    const map2 = new Map();
+    const object2: any = { map: map2 };
+
+    map2.set('obj', object2);
+
+    expect(equal(map1, map2)).toBe(true);
+  });
+});
+
 function map(object: any) {
   const a = new Map();
 
