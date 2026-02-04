@@ -1,7 +1,7 @@
 import equal from '../src';
 
 describe('dates', () => {
-  test.each([
+  it.each([
     {
       description: 'equal date objects',
       value1: new Date('2017-06-16T21:36:48.362Z'),

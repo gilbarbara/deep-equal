@@ -1,7 +1,7 @@
 import equal from '../src';
 
 describe('regex', () => {
-  test.each([
+  it.each([
     {
       description: 'equal RegExp objects',
       value1: /foo/,

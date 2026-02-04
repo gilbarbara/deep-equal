@@ -13,7 +13,7 @@ function set(array: any[]) {
 }
 
 describe('sets', () => {
-  test.each([
+  it.each([
     {
       description: 'empty sets are equal',
       value1: new Set(),

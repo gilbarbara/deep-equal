@@ -1,7 +1,7 @@
 import equal from '../src';
 
 describe('bigint', () => {
-  test.each([
+  it.each([
     {
       description: 'equal bigints',
       value1: BigInt(1),
